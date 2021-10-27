@@ -15,9 +15,6 @@ estimator:
         n_a: 8
         n_steps: 3
         gamma: 1.3
-        #        cat_idxs: None
-        #        cat_dims: None
-        #        cat_emb_dim: None
         n_independent: 2
         n_shared: 2
         epsilon: 0.0001

@@ -14,11 +14,54 @@ logger = logging.getLogger(" 🧠 kendrite")
 
 def neural_model(params: dict) -> Union[TabNetRegressor, TabNetClassifier]:
     """
-    Loads a regressor or classifier object based on given parameters.
+    Defines a neural regressor or classifier model based on given parameters.
+
+    PyTorch implementation of "TabNet: Attentive Interpretable Tabular Learning"
+        by Sercan O. Arik & Tomas Pfister. https://arxiv.org/abs/1908.07442
+
     Args:
-        params: dictionary of parameters
+        params: dictionary of parameters supplied through conf/params.yml
+
+    Param keys can define the following hyperparameters and settings:
+        n_decision: Width of the decision prediction layer. Bigger values gives more
+            capacity to the model with the risk to overfit. Usually ranges from 8 to 64.
+        n_attention: Width of the attention embedding for each mask. According to the
+            paper n_decision=n_attentionttention is usually a good choice.
+        n_steps: Number of steps in the architecture. Usually between 3 and 10.
+        gamma: This is the coefficient for feature reusage in the masks. A value close
+            to 1 will make mask selection least correlated between layers.
+            Values range from 1.0 to 2.0.
+        cat_idxs: List of categorical features indices.
+        cat_dims: List of categorical features number of modalities. (Number of unique
+            values for a categorical feature).
+        cat_emb_dim: List of embeddings size for each categorical features.
+        n_independent: Number of independent Gated Linear Units layers at each step.
+            Usual values range from 1 to 5.
+        n_shared: Number of shared Gated Linear Units at each step.
+            Usual values range from 1 to 5.
+        epsilon: Learning rate. Should be left untouched.
+        momentum: Momentum for batch normalization. Typically ranges from 0.01 to 0.4.
+        lambda_sparse: This is the extra sparsity loss coefficient as proposed in the
+            original paper. The bigger this coefficient is, the sparser your model will
+            be in terms of feature selection. Depending on the difficulty of your
+            problem, reducing this value could help.
+        seed: Random seed for reproducibility.
+        clip_value: If a float is given this will clip the gradient at clip_value.
+        verbose: Verbosity, set to 1 to see every epoch, 0 to get None.
+        optimizer_fn: Pytorch optimizer function.
+        optimizer_params: Parameters compatible with optimizer_fn used initialize the
+            optimizer. Since we have Adam as our default optimizer, we use this to
+            define the initial learning rate used for training. As mentionned in the
+            original paper, a large initial learning of 0.02 with decay is a good start.
+        scheduler_fn: Pytorch Scheduler to change learning rates during training.
+        scheduler_params: Dictionnary of parameters to apply to the scheduler_fn.
+            For example: {"gamma": 0.95, "step_size": 10}
+        mask_type: Either "sparsemax" or "entmax" : this is the masking function to use
+            for selecting features
+        device_name: "cpu" for cpu training, "gpu" for gpu training or "auto".
+
     Returns:
-        compatible model
+        model: Neural tabular regression or classification model.
     """
     params["kwargs"]["optimizer_fn"] = load_obj(
         params.get("kwargs", {}).get("optimizer_fn", "torch.optim.Adam")

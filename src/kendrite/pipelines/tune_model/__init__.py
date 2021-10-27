@@ -10,7 +10,7 @@
 # only and may only be shared outside your organisation with the prior written
 # permission of QuantumBlack.
 """
-Model Training Pipeline
+Hyperparameter Tuning Pipeline
 """
 __version__ = "0.1.0"
 

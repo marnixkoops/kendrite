@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node
 
-from .nodes import fit, predict, neural_model
+from .nodes import fit, neural_model, predict
 
 
 def create_model_pipeline(**kwargs):
@@ -8,11 +8,9 @@ def create_model_pipeline(**kwargs):
         [
             node(
                 func=neural_model,
-                inputs=[
-                    "params:estimator"
-                ],
+                inputs=["params:estimator"],
                 outputs="model",
-                name="regressor",
+                name="neural_model",
             ),
             node(
                 func=fit,

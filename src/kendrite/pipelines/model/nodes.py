@@ -119,15 +119,13 @@ def fit(
         y_train = y_train.reshape(-1, 1)
         y_valid = y_valid.reshape(-1, 1)
 
-    logger.info(
-        f"Training {type(model)} model for max {params['fit']['max_epochs']} epochs."
-    )
+    logger.info(f"Training {type(model)} model for max {params['max_epochs']} epochs.")
     model.fit(
         X_train=X_train,
         y_train=y_train,
         eval_set=[(X_train, y_train), (X_valid, y_valid)],
         eval_name=["train", "valid"],
-        **params.get("fit", {}),
+        **params,
     )
     return model
 

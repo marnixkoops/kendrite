@@ -9,7 +9,7 @@ val_size: 0.2
 
 # model params
 estimator:
-    task: "classification" # or "classification"
+    task: "classification" # one of "regression" or "classification"
     kwargs:
         n_d: 8
         n_a: 8

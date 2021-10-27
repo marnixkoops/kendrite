@@ -40,7 +40,7 @@ def report_metrics(
 
 def plot_model_history(
     model: Union[TabNetRegressor, TabNetClassifier], show: bool = True
-) -> None:
+):
     fig, axs = plt.subplots(3)
     fig.suptitle("Model History")
     sns.lineplot(
@@ -56,10 +56,12 @@ def plot_model_history(
     if show:
         plt.show()
 
+    return fig
+
 
 def plot_feature_importances(
     model: Union[TabNetRegressor, TabNetClassifier], features: List, show: bool = True
-) -> None:
+):
     feature_importances = pd.DataFrame(
         zip(features, model.feature_importances_), columns=["feature", "importance"]
     ).sort_values(by="importance", ascending=False)
@@ -73,13 +75,16 @@ def plot_feature_importances(
         palette="crest",
         dodge=False,
     )
-    plt.title("Global Feature Importance")
+    plt.title("Global Feature Importances")
     plt.xlabel("Importance")
     plt.ylabel("Feature")
     plt.legend("")
     plt.tight_layout()
+
     if show:
         plt.show()
+
+    return fig
 
 
 def plot_feature_masks(
@@ -87,7 +92,7 @@ def plot_feature_masks(
     X_test: np.ndarray,
     features: List,
     show: bool = True,
-) -> None:
+):
     explain_matrix, masks = model.explain(X_test)
 
     fig, axs = plt.subplots(1, 6, figsize=(12, 8))
@@ -102,3 +107,5 @@ def plot_feature_masks(
 
     if show:
         plt.show()
+
+    return fig

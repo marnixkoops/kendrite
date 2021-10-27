@@ -12,8 +12,9 @@ from pytorch_tabnet.tab_model import TabNetClassifier, TabNetRegressor
 from sklearn.metrics import accuracy_score, mean_squared_error
 
 sns.set_style("darkgrid")
-sns.set_palette("flare")
+sns.set_palette("crest")
 sns.set(rc={"figure.dpi": 200, "savefig.dpi": 200, "figure.figsize": (12, 8)})
+sns.set_context("notebook", font_scale=0.7)
 
 
 logger = logging.basicConfig(stream=sys.stdout, level=logging.INFO)
@@ -69,7 +70,7 @@ def plot_feature_importances(
         y="feature",
         hue="importance",
         data=feature_importances,
-        palette="flare",
+        palette="crest",
         dodge=False,
     )
     plt.title("Global Feature Importance")
@@ -77,5 +78,27 @@ def plot_feature_importances(
     plt.ylabel("Feature")
     plt.legend("")
     plt.tight_layout()
+    if show:
+        plt.show()
+
+
+def plot_feature_masks(
+    model: Union[TabNetRegressor, TabNetClassifier],
+    X_test: np.ndarray,
+    features: List,
+    show: bool = True,
+) -> None:
+    explain_matrix, masks = model.explain(X_test)
+
+    fig, axs = plt.subplots(1, 6, figsize=(12, 8))
+    axs[0].set_ylabel("Instance")
+    for i in range(model.n_steps):
+        axs[i].imshow(masks[i][:35], cmap="crest")
+        axs[i].set_title(f"Feature Mask {i+1}")
+        axs[i].set_yticks([])
+        axs[i].set_xticks(np.arange(len(features)))
+        axs[i].set_xticklabels(features, rotation=90)
+        axs[i].grid(False)
+
     if show:
         plt.show()

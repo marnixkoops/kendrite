@@ -1,6 +1,11 @@
 from kedro.pipeline import Pipeline, node
 
-from .nodes import plot_feature_importances, plot_model_history, report_metrics
+from .nodes import (
+    plot_feature_importances,
+    plot_feature_masks,
+    plot_model_history,
+    report_metrics,
+)
 
 
 def create_evaluation_pipeline(**kwargs):
@@ -23,6 +28,12 @@ def create_evaluation_pipeline(**kwargs):
                 inputs=["trained_model", "features"],
                 outputs=None,
                 name="plot_feature_importances",
+            ),
+            node(
+                func=plot_feature_masks,
+                inputs=["trained_model", "X_test", "features"],
+                outputs=None,
+                name="plot_feature_masks",
             ),
         ]
     )

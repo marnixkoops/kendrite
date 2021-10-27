@@ -34,7 +34,7 @@ train_tabnet:
             mask_type: "sparsemax"
             device_name: "auto"
     fit:
-        eval_metric: ["auc", "accuracy", "balanced_accuracy", "logloss"]
+        eval_metric: ["accuracy", "balanced_accuracy", "logloss"]
         weights: 1
         max_epochs: 64
         patience: 64

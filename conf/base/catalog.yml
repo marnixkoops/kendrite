@@ -8,17 +8,51 @@ wine:
   filepath: data/01_raw/wine.csv
   layer: raw
 
+X_train:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/X_train.csv
+  layer: model input
+
+y_train:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/y_train.csv
+  layer: model input
+
+X_valid:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/X_valid.csv
+  layer: model input
+
+y_valid:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/y_valid.csv
+  layer: model input
+
+X_test:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/X_test.csv
+  layer: model input
+
+y_test:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/y_test.csv
+  layer: model input
+
+y_pred:
+  type: pandas.CSVDataSet
+  filepath: data/07_model_output/y_pred.csv
+  layer: model input
 model_history:
   type: matplotlib.MatplotlibWriter
-  filepath: "data/07_model_output/model_history.png"
+  filepath: "data/08_reporting/model_history.png"
   layer: model output
 
 feature_importances:
   type: matplotlib.MatplotlibWriter
-  filepath: "data/07_model_output/feature_importances.png"
+  filepath: "data/08_reporting/feature_importances.png"
   layer: model output
 
 feature_masks:
   type: matplotlib.MatplotlibWriter
-  filepath: "data/07_model_output/feature_masks.png"
+  filepath: "data/08_reporting/feature_masks.png"
   layer: model output

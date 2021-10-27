@@ -2,45 +2,27 @@
 
 import logging
 import sys
-from typing import Any, Dict, List, Union
+from typing import List, Union
 
 import numpy as np
-import torch
+from kedro.utils import load_obj
 from pytorch_tabnet.tab_model import TabNetClassifier, TabNetRegressor
 
 logger = logging.basicConfig(stream=sys.stdout, level=logging.INFO,)
 logger = logging.getLogger(" 🧠 kendrite")
 
 
-def neural_regressor(
-    n_decision: int = 8,
-    n_attention: int = 8,
-    n_steps: int = 3,
-    gamma: float = 1.3,
-    cat_idxs: List[int] = None,
-    cat_dims: List[int] = None,
-    cat_emb_dim: int = None,
-    n_independent: int = 2,
-    n_shared: int = 2,
-    epsilon: float = 1e-15,
-    momentum: float = 0.02,
-    lambda_sparse: float = 1e-3,
-    seed: int = 0,
-    clip_value: int = 1,
-    verbose: int = 1,
-    optimizer_fn: Any = torch.optim.Adam,
-    optimizer_params: Dict = dict(lr=2e-2),
-    scheduler_fn: Any = torch.optim.lr_scheduler.StepLR,
-    scheduler_params: Dict = {"gamma": 0.95, "step_size": 20},
-    mask_type: str = "sparsemax",
-    device_name: str = "auto",
-) -> TabNetRegressor:
-    """Define a neural tabular regression model.
+def neural_model(params: dict) -> Union[TabNetRegressor, TabNetClassifier]:
+    """
+    Defines a neural regressor or classifier model based on given parameters.
 
     PyTorch implementation of "TabNet: Attentive Interpretable Tabular Learning"
-    by Sercan O. Arik & Tomas Pfister. https://arxiv.org/abs/1908.07442
+        by Sercan O. Arik & Tomas Pfister. https://arxiv.org/abs/1908.07442
 
     Args:
+        params: dictionary of parameters supplied through conf/params.yml
+
+    Param keys can define the following hyperparameters and settings:
         n_decision: Width of the decision prediction layer. Bigger values gives more
             capacity to the model with the risk to overfit. Usually ranges from 8 to 64.
         n_attention: Width of the attention embedding for each mask. According to the
@@ -79,115 +61,21 @@ def neural_regressor(
         device_name: "cpu" for cpu training, "gpu" for gpu training or "auto".
 
     Returns:
-        TabNetRegressor: Neural tabular regression model.
+        model: Neural tabular regression or classification model.
     """
-    logger.info("Defining neural regressor.")
-    model = TabNetRegressor(
-        n_d=n_decision,
-        n_a=n_attention,
-        n_steps=n_steps,
-        gamma=gamma,
-        n_independent=n_independent,
-        n_shared=n_shared,
-        epsilon=epsilon,
-        momentum=momentum,
-        lambda_sparse=lambda_sparse,
-        seed=seed,
-        clip_value=clip_value,
-        verbose=verbose,
-        optimizer_fn=optimizer_fn,
-        optimizer_params=optimizer_params,
-        scheduler_fn=scheduler_fn,
-        scheduler_params=scheduler_params,
-        mask_type=mask_type,
-        device_name=device_name,
+    params["kwargs"]["optimizer_fn"] = load_obj(
+        params.get("kwargs", {}).get("optimizer_fn", "torch.optim.Adam")
     )
-    return model
-
-
-def neural_classifier(
-    n_decision: int = 8,
-    n_attention: int = 8,
-    n_steps: int = 3,
-    gamma: float = 1.3,
-    n_independent: int = 2,
-    n_shared: int = 2,
-    epsilon: float = 1e-15,
-    momentum: float = 0.02,
-    lambda_sparse: float = 1e-3,
-    seed: int = 0,
-    clip_value: int = 1,
-    verbose: int = 1,
-    optimizer_fn: Any = torch.optim.Adam,
-    optimizer_params: Dict = dict(lr=2e-2),
-    mask_type: str = "sparsemax",
-    device_name: str = "auto",
-) -> TabNetClassifier:
-    """Define a neural tabular classification model.
-
-    PyTorch implementation of "TabNet: Attentive Interpretable Tabular Learning"
-    by Sercan O. Arik & Tomas Pfister. https://arxiv.org/abs/1908.07442
-
-    Args:
-        n_decision: Width of the decision prediction layer. Bigger values gives more
-            capacity to the model with the risk to overfit. Usually ranges from 8 to 64.
-        n_attention: Width of the attention embedding for each mask. According to the
-            paper n_decision=n_attentionttention is usually a good choice.
-        n_steps: Number of steps in the architecture. Usually between 3 and 10.
-        gamma: This is the coefficient for feature reusage in the masks. A value close
-            to 1 will make mask selection least correlated between layers.
-            Values range from 1.0 to 2.0.
-        cat_idxs: List of categorical features indices.
-        cat_dims: List of categorical features number of modalities. (Number of unique
-            values for a categorical feature).
-        cat_emb_dim: List of embeddings size for each categorical features.
-        n_independent: Number of independent Gated Linear Units layers at each step.
-            Usual values range from 1 to 5.
-        n_shared: Number of shared Gated Linear Units at each step.
-            Usual values range from 1 to 5.
-        epsilon: Learning rate. Should be left untouched.
-        momentum: Momentum for batch normalization. Typically ranges from 0.01 to 0.4.
-        lambda_sparse: This is the extra sparsity loss coefficient as proposed in the
-            original paper. The bigger this coefficient is, the sparser your model will
-            be in terms of feature selection. Depending on the difficulty of your
-            problem, reducing this value could help.
-        seed: Random seed for reproducibility.
-        clip_value: If a float is given this will clip the gradient at clip_value.
-        verbose: Verbosity, set to 1 to see every epoch, 0 to get None.
-        optimizer_fn: Pytorch optimizer function.
-        optimizer_params: Parameters compatible with optimizer_fn used initialize the
-            optimizer. Since we have Adam as our default optimizer, we use this to
-            define the initial learning rate used for training. As mentionned in the
-            original paper, a large initial learning of 0.02 with decay is a good start.
-        scheduler_fn: Pytorch Scheduler to change learning rates during training.
-        scheduler_params: Dictionnary of parameters to apply to the scheduler_fn.
-            For example: {"gamma": 0.95, "step_size": 10}
-        mask_type: Either "sparsemax" or "entmax" : this is the masking function to use
-            for selecting features
-        device_name: "cpu" for cpu training, "gpu" for gpu training or "auto".
-
-    Returns:
-        TabNetClassifier: Neural tabular classification model.
-    """
-    logger.info("Defining neural classifier.")
-    model = TabNetClassifier(
-        n_d=48,
-        n_a=48,
-        n_steps=6,
-        gamma=1.5,
-        n_independent=n_independent,
-        n_shared=n_shared,
-        epsilon=epsilon,
-        momentum=0.3,
-        lambda_sparse=lambda_sparse,
-        seed=seed,
-        clip_value=clip_value,
-        verbose=verbose,
-        optimizer_fn=torch.optim.Adam,
-        optimizer_params=optimizer_params,
-        mask_type=mask_type,
-        device_name=device_name,
+    params["kwargs"]["scheduler_fn"] = load_obj(
+        params.get("kwargs", {}).get("scheduler_fn", "torch.optim.lr_scheduler.StepLR")
     )
+
+    task = params.get("task", "regression")
+    if task == "regression":
+        model = TabNetRegressor(**params.get("kwargs", {}))
+    elif task == "classification":
+        model = TabNetClassifier(**params.get("kwargs", {}))
+
     return model
 
 

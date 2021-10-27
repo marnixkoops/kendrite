@@ -1,14 +1,18 @@
+from functools import partial
+
 from kedro.pipeline import Pipeline, node
 
 from .nodes import fit, neural_model, predict
 
 
-def create_model_pipeline(**kwargs):
+def create_model_pipeline(from_hyperparameter_tuning: bool = False) -> Pipeline:
     return Pipeline(
         [
             node(
                 func=neural_model,
-                inputs=["params:train_tabnet.estimator"],
+                inputs="estimator_config"
+                if from_hyperparameter_tuning
+                else "params:train_tabnet.estimator",
                 outputs="model",
                 name="neural_model",
             ),

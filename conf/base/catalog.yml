@@ -6,3 +6,19 @@
 wine:
   type: pandas.CSVDataSet
   filepath: data/01_raw/wine.csv
+  layer: raw
+
+model_history:
+  type: matplotlib.MatplotlibWriter
+  filepath: "data/07_model_output/model_history.png"
+  layer: model output
+
+feature_importances:
+  type: matplotlib.MatplotlibWriter
+  filepath: "data/07_model_output/feature_importances.png"
+  layer: model output
+
+feature_masks:
+  type: matplotlib.MatplotlibWriter
+  filepath: "data/07_model_output/feature_masks.png"
+  layer: model output

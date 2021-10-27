@@ -13,7 +13,8 @@ from sklearn.metrics import accuracy_score, mean_squared_error
 
 sns.set_style("darkgrid")
 sns.set_palette("crest")
-sns.set(rc={"figure.dpi": 200, "savefig.dpi": 200, "figure.figsize": (10, 6)})
+sns.set(rc={"figure.dpi": 200, "savefig.dpi": 200, "figure.figsize": (12, 8)})
+sns.set_context("notebook", font_scale=0.7)
 
 
 logger = logging.basicConfig(stream=sys.stdout, level=logging.INFO)
@@ -39,7 +40,7 @@ def report_metrics(
 
 def plot_model_history(
     model: Union[TabNetRegressor, TabNetClassifier], show: bool = True
-) -> None:
+):
     fig, axs = plt.subplots(3)
     fig.suptitle("Model History")
     sns.lineplot(
@@ -55,10 +56,12 @@ def plot_model_history(
     if show:
         plt.show()
 
+    return fig
+
 
 def plot_feature_importances(
     model: Union[TabNetRegressor, TabNetClassifier], features: List, show: bool = True
-) -> None:
+):
     feature_importances = pd.DataFrame(
         zip(features, model.feature_importances_), columns=["feature", "importance"]
     ).sort_values(by="importance", ascending=False)
@@ -72,10 +75,37 @@ def plot_feature_importances(
         palette="crest",
         dodge=False,
     )
-    plt.title("Feature Importances")
+    plt.title("Global Feature Importances")
     plt.xlabel("Importance")
     plt.ylabel("Feature")
     plt.legend("")
     plt.tight_layout()
+
     if show:
         plt.show()
+
+    return fig
+
+
+def plot_feature_masks(
+    model: Union[TabNetRegressor, TabNetClassifier],
+    X_test: np.ndarray,
+    features: List,
+    show: bool = True,
+):
+    explain_matrix, masks = model.explain(X_test)
+
+    fig, axs = plt.subplots(1, 6, figsize=(12, 8))
+    axs[0].set_ylabel("Instance")
+    for i in range(model.n_steps):
+        axs[i].imshow(masks[i][:35], cmap="crest")
+        axs[i].set_title(f"Feature Mask {i+1}")
+        axs[i].set_yticks([])
+        axs[i].set_xticks(np.arange(len(features)))
+        axs[i].set_xticklabels(features, rotation=90)
+        axs[i].grid(False)
+
+    if show:
+        plt.show()
+
+    return fig

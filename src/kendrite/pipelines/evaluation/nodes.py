@@ -11,6 +11,11 @@ from matplotlib import pyplot as plt
 from pytorch_tabnet.tab_model import TabNetClassifier, TabNetRegressor
 from sklearn.metrics import accuracy_score, mean_squared_error
 
+sns.set_style("darkgrid")
+sns.set_palette("crest")
+sns.set(rc={"figure.dpi": 200, "savefig.dpi": 200, "figure.figsize": (10, 6)})
+
+
 logger = logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger(" 🧠 kendrite")
 

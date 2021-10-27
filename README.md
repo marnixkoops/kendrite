@@ -1,4 +1,6 @@
-# kendrite
+# 🧠 kendrite
+
+A framework for attentive explainable deep learning on tabular data
 
 ## Overview
 

@@ -71,7 +71,6 @@ def neural_model(params: dict) -> Union[TabNetRegressor, TabNetClassifier]:
     )
 
     task = params.get("task", "regression")
-
     if task == "regression":
         model = TabNetRegressor(**params.get("kwargs", {}))
     elif task == "classification":

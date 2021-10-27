@@ -86,6 +86,7 @@ def fit(
     X_valid: np.array = None,
     y_valid: np.array = None,
     params: Dict[str, Any] = None,
+    tuning: bool = False,
 ) -> Union[TabNetRegressor, TabNetClassifier]:
     """Train a neural tabular regression or classification model.
 
@@ -117,6 +118,19 @@ def fit(
         y_valid = y_valid.reshape(-1, 1)
 
     logger.info(f"Training {type(model)} model for max {params['max_epochs']} epochs.")
+    if params.get("callbacks"):
+        if not tuning:
+            # remove Ray Tune callback if not tuning
+            params["callbacks"] = [
+                callback
+                for callback in params["callbacks"]
+                if "Tune" not in callback["class"]
+            ]
+        for idx, callback_config in enumerate(params.get("callbacks")):
+            params["callbacks"][idx] = load_obj(callback_config["class"])(
+                **callback_config.get("kwargs", {})
+            )
+
     model.fit(
         X_train=X_train,
         y_train=y_train,

@@ -18,3 +18,4 @@ torch>=1.9.0
 wheel>=0.35, <0.37
 seaborn~=0.11.2
 ray[tune]~=1.7.1
+optuna~=2.10.0

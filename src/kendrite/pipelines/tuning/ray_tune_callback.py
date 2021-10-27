@@ -95,7 +95,9 @@ class TuneReportCallback(TuneCallback):
         if not self._metrics:
             report_dict = {
                 k: v[-1]
-                for k, v in self._callback_container.callbacks[0].history.items()
+                for k, v in self.trainer._callback_container.callbacks[
+                    0
+                ].history.items()
             }
         else:
             report_dict = {}
@@ -105,9 +107,9 @@ class TuneReportCallback(TuneCallback):
                 else:
                     metric = key
                 if metric in self.trainer._metrics_names:
-                    report_dict[key] = self._callback_container.callbacks[0].history[
-                        metric
-                    ][-1]
+                    report_dict[key] = self.trainer._callback_container.callbacks[
+                        0
+                    ].history[metric][-1]
                 else:
                     logger.warning(
                         f"Metric {metric} does not exist in " "`trainer._metric_names."

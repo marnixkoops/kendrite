@@ -14,8 +14,7 @@ Hyperparameter Tuning Pipeline
 """
 __version__ = "0.1.0"
 
+from .pipeline import create_pipeline
 from .ray_tune_callback import TuneReportCallback
 
-# from .pipeline import create_pipeline
-
-__all__ = ["TuneReportCallback"]
+__all__ = ["TuneReportCallback", "create_pipeline"]

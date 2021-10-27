@@ -36,6 +36,54 @@ train_tabnet:
     fit:
         eval_metric: ["accuracy", "balanced_accuracy", "logloss"]
         weights: 1
-        max_epochs: 64
+        max_epochs: &epoch 64
         patience: 64
         batch_size: 256
+        callbacks:
+            - class: kendrite.pipelines.tune_model.TuneReportCallback
+              kwargs:
+                  metrics: &monitor "valid_logloss"
+                  "on": "epoch_end"
+    tune_params:
+        metric: *monitor
+        mode: min
+        local_dir: data/07_model_output/ray_tune_results/ # store tune results
+        fail_fast: True
+        config:
+            n_d:
+                class: ray.tune.randint
+                kwargs:
+                    lower: 4
+                    upper: 64
+            n_a:
+                class: ray.tune.randint
+                kwargs:
+                    lower: 4
+                    upper: 64
+            n_steps:
+                class: ray.tune.randint
+                kwargs:
+                    lower: 3
+                    upper: 10
+            gamma:
+                class: ray.tune.uniform
+                kwargs:
+                    lower: !!float 1.0
+                    upper: !!float 2.0
+        scheduler:
+            class: ray.tune.schedulers.AsyncHyperBandScheduler
+            kwargs:
+                time_attr: training_iteration
+                max_t: *epoch
+                grace_period: 20
+        search_alg:
+            class: ray.tune.suggest.optuna.OptunaSearch
+            kwargs: {}
+        # callbacks: - List[Dict]. Each dict-> class and kwarg: Dict[str,str]
+        num_samples: 200
+        verbose: 1 # level of messages to print
+        stop:
+            training_iteration: *epoch
+        resources_per_trial:
+            cpu: 1
+            gpu: 0

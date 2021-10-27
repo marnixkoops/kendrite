@@ -2,17 +2,17 @@
 
 import logging
 import sys
-from typing import Any, Dict, List, Union
+from typing import List, Union
 
 import numpy as np
-import torch
-from pytorch_tabnet.tab_model import TabNetClassifier, TabNetRegressor
 from kedro.utils import load_obj
+from pytorch_tabnet.tab_model import TabNetClassifier, TabNetRegressor
 
 logger = logging.basicConfig(stream=sys.stdout, level=logging.INFO,)
 logger = logging.getLogger(" 🧠 kendrite")
 
-def neural_model(params:dict) -> Union[TabNetRegressor, TabNetClassifier]:
+
+def neural_model(params: dict) -> Union[TabNetRegressor, TabNetClassifier]:
     """
     Loads a regressor or classifier object based on given parameters.
     Args:
@@ -20,9 +20,15 @@ def neural_model(params:dict) -> Union[TabNetRegressor, TabNetClassifier]:
     Returns:
         compatible model
     """
-    params["kwargs"]["optimizer_fn"]= load_obj(params.get("kwargs", {}).get("optimizer_fn", "torch.optim.Adam"))
-    params["kwargs"]["scheduler_fn"] = load_obj(params.get("kwargs", {}).get("scheduler_fn", "torch.optim.lr_scheduler.StepLR"))
+    params["kwargs"]["optimizer_fn"] = load_obj(
+        params.get("kwargs", {}).get("optimizer_fn", "torch.optim.Adam")
+    )
+    params["kwargs"]["scheduler_fn"] = load_obj(
+        params.get("kwargs", {}).get("scheduler_fn", "torch.optim.lr_scheduler.StepLR")
+    )
+
     task = params.get("task", "regression")
+
     if task == "regression":
         model = TabNetRegressor(**params.get("kwargs", {}))
     elif task == "classification":

@@ -39,7 +39,7 @@ def report_metrics(
 
 
 def plot_model_history(
-    model: Union[TabNetRegressor, TabNetClassifier], show: bool = True
+    model: Union[TabNetRegressor, TabNetClassifier], show: bool = False
 ):
     fig, axs = plt.subplots(3)
     fig.suptitle("Model History")
@@ -60,7 +60,7 @@ def plot_model_history(
 
 
 def plot_feature_importances(
-    model: Union[TabNetRegressor, TabNetClassifier], features: List, show: bool = True
+    model: Union[TabNetRegressor, TabNetClassifier], features: List, show: bool = False
 ):
     feature_importances = pd.DataFrame(
         zip(features, model.feature_importances_), columns=["feature", "importance"]
@@ -91,7 +91,7 @@ def plot_feature_masks(
     model: Union[TabNetRegressor, TabNetClassifier],
     X_test: np.ndarray,
     features: List,
-    show: bool = True,
+    show: bool = False,
 ):
     explain_matrix, masks = model.explain(X_test)
     n_masks = model.n_steps

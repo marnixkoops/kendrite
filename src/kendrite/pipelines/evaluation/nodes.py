@@ -12,8 +12,8 @@ from pytorch_tabnet.tab_model import TabNetClassifier, TabNetRegressor
 from sklearn.metrics import accuracy_score, mean_squared_error
 
 sns.set_style("darkgrid")
-sns.set_palette("crest")
-sns.set(rc={"figure.dpi": 200, "savefig.dpi": 200, "figure.figsize": (10, 6)})
+sns.set_palette("flare")
+sns.set(rc={"figure.dpi": 200, "savefig.dpi": 200, "figure.figsize": (12, 8)})
 
 
 logger = logging.basicConfig(stream=sys.stdout, level=logging.INFO)
@@ -69,10 +69,10 @@ def plot_feature_importances(
         y="feature",
         hue="importance",
         data=feature_importances,
-        palette="crest",
+        palette="flare",
         dodge=False,
     )
-    plt.title("Feature Importances")
+    plt.title("Global Feature Importance")
     plt.xlabel("Importance")
     plt.ylabel("Feature")
     plt.legend("")

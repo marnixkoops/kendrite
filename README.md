@@ -5,7 +5,7 @@ A framework for attentive explainable deep learning on tabular data
 ### 🚀 Quick start
 
 ```bash
-$
+kedro run
 ```
 
 ### 🧱 Built upon

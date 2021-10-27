@@ -2,3 +2,7 @@
 #
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
+
+wine:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/wine.csv

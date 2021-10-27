@@ -8,27 +8,34 @@ test_size: 0.2
 val_size: 0.2
 
 # model params
-estimator:
-    task: "classification" # one of "regression" or "classification"
-    kwargs:
-        n_d: 48
-        n_a: 48
-        n_steps: 6
-        gamma: 1.5
-        n_independent: 2
-        n_shared: 2
-        epsilon: 1.0e-15
-        momentum: 0.3
-        lambda_sparse: 0.01
-        seed: 0
-        clip_value: 1
-        verbose: 1
-        optimizer_fn: "torch.optim.Adam"
-        optimizer_params:
-            lr: 0.02
-        scheduler_fn: "torch.optim.lr_scheduler.StepLR"
-        scheduler_params:
-            gamma: 0.95
-            step_size: 20
-        mask_type: "sparsemax"
-        device_name: "auto"
+train_tabnet:
+    estimator:
+        task: "classification" # one of "regression" or "classification"
+        kwargs:
+            n_d: 48
+            n_a: 48
+            n_steps: 6
+            gamma: 1.5
+            n_independent: 2
+            n_shared: 2
+            epsilon: 1.0e-15
+            momentum: 0.3
+            lambda_sparse: 0.01
+            seed: 0
+            clip_value: 1
+            verbose: 1
+            optimizer_fn: "torch.optim.Adam"
+            optimizer_params:
+                lr: 0.02
+            scheduler_fn: "torch.optim.lr_scheduler.StepLR"
+            scheduler_params:
+                gamma: 0.95
+                step_size: 20
+            mask_type: "sparsemax"
+            device_name: "auto"
+    fit:
+        eval_metric: ["accuracy", "balanced_accuracy", "logloss"]
+        weights: 1
+        max_epochs: 64
+        patience: 64
+        batch_size: 256

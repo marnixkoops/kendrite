@@ -8,13 +8,20 @@ def create_model_pipeline(**kwargs):
         [
             node(
                 func=neural_model,
-                inputs=["params:estimator"],
+                inputs=["params:train_tabnet.estimator"],
                 outputs="model",
                 name="neural_model",
             ),
             node(
                 func=fit,
-                inputs=["model", "X_train", "y_train", "X_valid", "y_valid"],
+                inputs=[
+                    "model",
+                    "X_train",
+                    "y_train",
+                    "X_valid",
+                    "y_valid",
+                    "params:train_tabnet.fit",
+                ],
                 outputs="trained_model",
                 name="fit",
             ),

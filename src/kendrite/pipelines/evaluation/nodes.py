@@ -94,8 +94,9 @@ def plot_feature_masks(
     show: bool = True,
 ):
     explain_matrix, masks = model.explain(X_test)
+    n_masks = model.n_steps
 
-    fig, axs = plt.subplots(1, 6, figsize=(12, 8))
+    fig, axs = plt.subplots(1, n_masks, figsize=(12, 8))
     axs[0].set_ylabel("Instance")
     for i in range(model.n_steps):
         axs[i].imshow(masks[i][:35], cmap="crest")

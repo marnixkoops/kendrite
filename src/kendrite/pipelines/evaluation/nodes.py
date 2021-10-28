@@ -13,8 +13,8 @@ from sklearn.metrics import accuracy_score, mean_squared_error
 
 sns.set_style("darkgrid")
 sns.set_palette("crest")
-sns.set(rc={"figure.dpi": 200, "savefig.dpi": 200, "figure.figsize": (12, 8)})
-sns.set_context("notebook", font_scale=0.7)
+sns.set(rc={"figure.dpi": 200, "savefig.dpi": 200, "figure.figsize": (10, 6)})
+sns.set_context("notebook", font_scale=0.8)
 
 
 logger = logging.basicConfig(stream=sys.stdout, level=logging.INFO)
@@ -95,14 +95,14 @@ def plot_feature_masks(
     explain_matrix, masks = model.explain(X_test)
     n_masks = model.n_steps
 
-    fig, axs = plt.subplots(1, n_masks, figsize=(12, 8))
+    fig, axs = plt.subplots(1, n_masks)
     axs[0].set_ylabel("Instance")
     for i in range(model.n_steps):
         axs[i].imshow(masks[i][:35], cmap="crest")
         axs[i].set_title(f"Feature Mask {i+1}")
         axs[i].set_yticks([])
         axs[i].set_xticks(np.arange(len(features)))
-        axs[i].set_xticklabels(features, rotation=90)
+        axs[i].set_xticklabels(features, rotation=90, fontsize=7)
         axs[i].grid(False)
 
     if show:

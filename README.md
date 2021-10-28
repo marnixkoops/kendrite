@@ -12,7 +12,7 @@ kedro run
 
 Many QB projects boil down to a tabular learning problem where the goal is learning a function to predict a target given some input data. A significant amount of time, effort, and discussion are invested in understanding, mapping, and hand-crafting a large set of useful features to train a model. 
 
-Neural networks can automate feature learning, greatly alleviating this effort. We have built a modular and ready-to-go pipeline that enables rapid testing with a neural approach for regression and classification problems without costly feature engineering.
+Neural networks can automate feature learning, greatly alleviating this effort and reducing time to impact. We have built a modular and ready-to-go pipeline that enables rapid testing with a neural approach for regression and classification problems without costly feature engineering.
 
 ### 🧱 Built upon
 

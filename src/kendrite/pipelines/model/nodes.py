@@ -2,16 +2,13 @@
 
 import logging
 import sys
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, Union
 
 import numpy as np
 from kedro.utils import load_obj
 from pytorch_tabnet.tab_model import TabNetClassifier, TabNetRegressor
 
-logger = logging.basicConfig(
-    stream=sys.stdout,
-    level=logging.INFO,
-)
+logger = logging.basicConfig(stream=sys.stdout, level=logging.INFO,)
 logger = logging.getLogger(" 🧠 kendrite")
 
 
@@ -103,13 +100,13 @@ def fit(
                 The last metric is used for early stopping.
             loss_fn: Loss function for training (default to mse for regression and
                 cross-entropy for classification
-            weights: Only for classifier. 0: no sampling 1: automated sampling with inverse
-                class occurrences.
+            weights: Only for classifier. 0: no sampling 1: automated sampling with
+                inverse class occurrences.
             max_epochs: Maximum number of epochs for trainng.
             patience: Number of consecutive epochs without improvement before performing
                 early stopping. If patience is set to 0 then no early stopping will be
-                performed. Note that if patience is enabled, best weights from best epoch
-                will automatically be loaded at the end of fit.
+                performed. Note that if patience is enabled, best weights from best
+                    epoch will automatically be loaded at the end of fit.
             batch_size: Number of examples per batch, large batch sizes are recommended.
 
     Returns:

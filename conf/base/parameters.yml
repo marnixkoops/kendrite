@@ -10,7 +10,7 @@ val_size: 0.2
 # model params
 train_tabnet:
     estimator:
-        task: "classification" # one of "regression" or "classification"
+        task: "classification" # regression" or "classification"
         kwargs:
             n_d: 48
             n_a: 48

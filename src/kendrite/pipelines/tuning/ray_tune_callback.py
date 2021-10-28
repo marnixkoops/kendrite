@@ -6,10 +6,7 @@ from typing import Dict, List, Union
 from pytorch_tabnet.callbacks import Callback
 from ray import tune
 
-logger = logging.basicConfig(
-    stream=sys.stdout,
-    level=logging.INFO,
-)
+logger = logging.basicConfig(stream=sys.stdout, level=logging.INFO,)
 logger = logging.getLogger(" 🧠 kendrite")
 
 
@@ -80,7 +77,7 @@ class TuneReportCallback(TuneCallback):
 
     .. code-block:: python
 
-        from kendrite.pipelines.tune_model import TuneReportCallback
+        from kendrite.pipelines.tuning import TuneReportCallback
 
 
     """

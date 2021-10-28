@@ -33,12 +33,10 @@ Deep neural network architecture for regression and classification problems.
 3. Above design choices lead to two valuable properties: (i) TabNet outperforms or is on par with other tabular learning models. and (ii) TabNet enables two kinds of interpretability: local interpretability that visualizes the importance of features and how they are combined, and global interpretability which quantifies the contribution of each feature to the trained model.
 4. Finally, for the first time for tabular data, we show significant performance improvements by self-supervised learning.
 
-
 ### 🌊 MLflow
 
 * Track pipeline runs, parameters, metrics and other results
 * Enables, collaborative and reproducible experimentation in a team
-
 
 ### 🌀 Hyperparameter Tuning
 

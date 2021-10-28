@@ -3,7 +3,7 @@ from typing import Dict
 
 from kedro.pipeline import Pipeline, pipeline
 
-from kendrite.pipelines import engineering, evaluation, model, tune_model
+from kendrite.pipelines import engineering, evaluation, model, tuning
 
 
 def register_pipelines() -> Dict[str, Pipeline]:
@@ -16,7 +16,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
     engineering_pipeline = engineering.create_data_pipeline()
     model_pipeline = model.create_model_pipeline()
     evaluation_pipeline = evaluation.create_evaluation_pipeline()
-    tune_pipeline = tune_model.create_pipeline()
+    tune_pipeline = tuning.create_pipeline()
     model_pipeline_from_tune = model.create_model_pipeline(
         from_hyperparameter_tuning=True
     )

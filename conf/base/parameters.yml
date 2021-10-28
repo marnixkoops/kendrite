@@ -40,7 +40,7 @@ train_tabnet:
         patience: 64
         batch_size: 256
         callbacks:
-            - class: kendrite.pipelines.tune_model.TuneReportCallback
+            - class: kendrite.pipelines.tuning.TuneReportCallback
               kwargs:
                   metrics: &monitor "valid_logloss"
                   "on": "epoch_end"

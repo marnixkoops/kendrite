@@ -29,13 +29,12 @@ def report_metrics(
     logger.info(f"Best validation score: {model.best_cost}")
     logger.info("Computing error on test set.")
     if type(model) == TabNetRegressor:
-        mse = mean_squared_error(y_test, y_pred)
-        logger.info(f"Mean squared error on test set: {mse}.")
-        return mse
+        metric = mean_squared_error(y_test, y_pred)
+        logger.info(f"Mean squared error on test set: {metric}.")
     elif type(model) == TabNetClassifier:
-        accuracy = accuracy_score(y_test, y_pred)
-        logger.info(f"Accuracy on test set: {accuracy}.")
-        return accuracy
+        metric = accuracy_score(y_test, y_pred)
+        logger.info(f"Accuracy on test set: {metric}.")
+    return metric
 
 
 def plot_model_history(

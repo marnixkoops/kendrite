@@ -90,7 +90,7 @@ def create_tabnet_trainer(
 
     def tabnet_trainer(config):
         mapped_params = config_mapper(params, config)
-        model = neural_model(params["estimator"])
+        model = neural_model(mapped_params["estimator"])
         fit(
             model, X_train, y_train, X_valid, y_valid, mapped_params["fit"], tuning=True
         )

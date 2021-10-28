@@ -80,7 +80,7 @@ train_tabnet:
             class: ray.tune.suggest.optuna.OptunaSearch
             kwargs: {}
         # callbacks: - List[Dict]. Each dict-> class and kwarg: Dict[str,str]
-        num_samples: 200
+        num_samples: 20
         verbose: 1 # level of messages to print
         stop:
             training_iteration: *epoch

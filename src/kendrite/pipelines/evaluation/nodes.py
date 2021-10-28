@@ -34,7 +34,7 @@ def report_metrics(
     elif type(model) == TabNetClassifier:
         metric = accuracy_score(y_test, y_pred)
         logger.info(f"Accuracy on test set: {metric}.")
-    return metric
+    return {"metric1": {"value": metric, "step": 1}}
 
 
 def plot_model_history(

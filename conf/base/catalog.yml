@@ -28,3 +28,6 @@ feature_masks:
     type: matplotlib.MatplotlibWriter
     filepath: "data/07_model_output/feature_masks.png"
   layer: model output
+
+test_metric:
+    type: kedro_mlflow.io.metrics.MlflowMetricsDataSet

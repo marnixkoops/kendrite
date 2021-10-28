@@ -14,7 +14,7 @@ logger = logging.getLogger(" 🧠 kendrite")
 
 def neural_model(params: dict) -> Union[TabNetRegressor, TabNetClassifier]:
     """
-    Defines a neural regressor or classifier model based on given parameters.
+    Defines a neural regressor or classifier model.
 
     PyTorch implementation of "TabNet: Attentive Interpretable Tabular Learning"
         by Sercan O. Arik & Tomas Pfister. https://arxiv.org/abs/1908.07442

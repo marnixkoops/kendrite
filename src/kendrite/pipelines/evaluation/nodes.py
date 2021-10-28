@@ -28,13 +28,16 @@ def report_metrics(
 ) -> float:
     logger.info(f"Best validation score: {model.best_cost}")
     logger.info("Computing error on test set.")
+    metric_name = ""
     if type(model) == TabNetRegressor:
+        metric_name = "mean_squared_error"
         metric = mean_squared_error(y_test, y_pred)
         logger.info(f"Mean squared error on test set: {metric}.")
     elif type(model) == TabNetClassifier:
+        metric_name = "accuracy_score"
         metric = accuracy_score(y_test, y_pred)
         logger.info(f"Accuracy on test set: {metric}.")
-    return metric
+    return {metric_name: {"value": metric, "step": 1}}
 
 
 def plot_model_history(

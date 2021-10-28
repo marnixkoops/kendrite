@@ -8,7 +8,7 @@ A framework for attentive explainable deep learning on tabular data
 kedro run
 ```
 
-### 💡 Concept
+### 💡 Solution
 
 Many QB projects boil down to a tabular learning problem where the goal is learning a function to predict a target given some input data. A significant amount of time, effort, and discussion are invested in understanding, mapping, and hand-crafting a large set of useful features to train a model. 
 

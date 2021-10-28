@@ -28,10 +28,10 @@ Neural networks can automate feature learning, greatly alleviating this effort. 
 Introduced by Sercan ̈Arık, Tomas Pfister from Google Cloud AI in 2019.
 Deep neural network architecture for regression and classification problems.
 
-1. TabNet inputs raw tabular data without any preprocessing and is trained using gradient descent-based optimization, enabling flexible integration into end-to-end learning.
-2. TabNet uses sequential attention to choose which features to reason from at each decision step, enabling interpretability and better learning as the learning capacity is used for the most salient features. This feature selection is instance-wise, it can be different for each input. TabNet employs a single deep learning architecture for feature selection and reasoning.
-3. Above design choices lead to two valuable properties: (i) TabNet outperforms or is on par with other tabular learning models. and (ii) TabNet enables two kinds of interpretability: local interpretability that visualizes the importance of features and how they are combined, and global interpretability which quantifies the contribution of each feature to the trained model.
-4. Finally, for the first time for tabular data, we show significant performance improvements by self-supervised learning.
+1. TabNet inputs raw tabular data without any preprocessing and is trained using gradient descent-based optimization.
+2. TabNet uses sequential attention to choose which features to use. This enables both local and global explainability of the model within a single architecture.
+3. TabNet outperforms or is on par with other tabular learning models such as XGBoost.
+4. Finally, for the first time for tabular data, they show significant performance improvements by self-supervised learning.
 
 ### 🌊 MLflow
 

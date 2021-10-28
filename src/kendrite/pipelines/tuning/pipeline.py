@@ -38,7 +38,7 @@ def create_pipeline(config_mapper: Callable = map_config_params) -> Pipeline:
                 patience: 64
                 batch_size: 256
                 callbacks:
-                    - class: kendrite.pipelines.tune_model.TuneReportCallback
+                    - class: kendrite.pipelines.tuning.TuneReportCallback
                       kwargs:
                           metrics: "val_logloss"
                           "on": 'epoch_end'

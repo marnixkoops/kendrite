@@ -1,6 +1,5 @@
 import logging
 import sys
-from dataclasses import dataclass
 from typing import Dict, List, Union
 
 from pytorch_tabnet.callbacks import Callback

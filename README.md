@@ -25,7 +25,7 @@ Neural networks can automate feature learning, greatly alleviating this effort. 
 
 ### 🕸️ TabNet
 
-Introduced by Sercan ̈Arık, Tomas Pfister from Google Cloud AI in 2019.
+Introduced by Sercan Arık, Tomas Pfister from Google Cloud AI in 2019.
 Deep neural network architecture for regression and classification problems.
 
 1. TabNet inputs raw tabular data without any preprocessing and is trained using gradient descent-based optimization.

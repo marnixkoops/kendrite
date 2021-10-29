@@ -25,10 +25,7 @@ from ray import tune
 
 from ..model.nodes import fit, neural_model
 
-logger = logging.basicConfig(
-    stream=sys.stdout,
-    level=logging.INFO,
-)
+logger = logging.basicConfig(stream=sys.stdout, level=logging.INFO,)
 logger = logging.getLogger(" 🧠 kendrite")
 
 

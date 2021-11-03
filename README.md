@@ -1,6 +1,6 @@
 # 🧠 **kendrite**
 
-A framework for attentive explainable deep learning on tabular data
+A Kedro framework for attentive explainable deep learning on tabular data
 
 ### 💨 Quick start
 
